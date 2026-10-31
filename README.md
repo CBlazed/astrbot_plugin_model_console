@@ -1,5 +1,8 @@
 # 模型切换器（astrbot_plugin_model_console）
 
+[![tests](https://github.com/CBlazed/astrbot_plugin_model_console/actions/workflows/tests.yml/badge.svg)](https://github.com/CBlazed/astrbot_plugin_model_console/actions/workflows/tests.yml) [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+
 把原先独立的 Node 版「AstrBot 模型控制台（model-console）」**全量重写为 AstrBot 插件**：
 在 AstrBot WebUI 里集中查看 / 更换 AstrBot 核心、各 bot 配置档案与插件使用的模型。
 
