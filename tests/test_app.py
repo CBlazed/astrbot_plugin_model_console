@@ -254,19 +254,19 @@ class HealthStateTest(_AppCase):
         health = await app.health()
         self.assertEqual(health["status"], "ok")
         self.assertEqual(health["version"], "v0.1.0")
-        self.assertEqual(health["dataPath"], str(self.root / "data"))
-        self.assertEqual(health["stateDir"], str(self.root / "state"))
+        self.assertEqual(health["dataPath"], str((self.root / "data").resolve()))
+        self.assertEqual(health["stateDir"], str((self.root / "state").resolve()))
         self.assertFalse(health["readOnly"])
         self.assertIsNotNone(health["startedAt"])
 
     async def test_state(self) -> None:
         app = await self.make_app()
         state = await app.state()
-        self.assertEqual(state["stateDir"], str(self.root / "state"))
+        self.assertEqual(state["stateDir"], str((self.root / "state").resolve()))
         self.assertTrue(state["writable"])
         self.assertTrue(state["editMode"])
         self.assertFalse(state["legacyImported"])
-        self.assertEqual(state["astrbotData"], str(self.root / "data"))
+        self.assertEqual(state["astrbotData"], str((self.root / "data").resolve()))
 
     async def test_read_only_from_config(self) -> None:
         app = await self.make_app({"edit_mode": False})
