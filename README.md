@@ -107,6 +107,9 @@
 ## 开发与测试
 
 ```bash
+# 开发依赖（插件运行时不需要，只用于跑单测）
+python -m pip install -r requirements-dev.txt
+
 # 全部单测（标准库 unittest，不依赖 AstrBot 进程）
 python -m unittest discover -s tests -t . -v
 
