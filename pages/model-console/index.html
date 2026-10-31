@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>模型切换器 · AstrBot</title><link rel="stylesheet" href="./styles.css"></head>
+<body><a class="skip-link" href="#main">跳到主要内容</a><aside class="rail"><a class="brand" href="#overview"><span class="brand-icon">A</span><span>AstrBot<small>模型切换器</small></span></a><p class="rail-label">工作空间</p><nav aria-label="主要导航"><a href="#overview" aria-current="location" aria-label="配置总览" title="配置总览">◫ <span>配置总览</span></a><a href="#core" aria-label="AstrBot 本体" title="AstrBot 本体">▤ <span>AstrBot 本体</span></a><a href="#plugins" aria-label="插件模型" title="插件模型">▦ <span>插件模型</span></a><a href="#models" aria-label="模型库" title="模型库">◇ <span>模型库</span></a></nav><div class="rail-foot"><span class="dot"></span> AstrBot 插件页面<small>由 Dashboard 鉴权 · 刷新会丢弃未应用草稿</small></div></aside>
+<main id="main" tabindex="-1"><header class="topbar"><div><p class="eyebrow">WORKSPACE / MODELS</p><h1 id="page-title">模型切换器</h1><p class="muted">让每一项任务，都找到合适的模型。</p></div><div class="top-actions"><label class="device-picker"><span class="sr-only">当前设备</span><select id="device-select" aria-label="选择设备"></select></label><span id="config-version" class="pill" title="当前配置版本">配置版本 —</span><span id="mode" class="pill">未连接</span><button id="refresh" class="button">↻ 刷新配置</button></div></header>
+<div id="message" role="status" aria-live="polite"></div>
+<div id="remote-notice" class="notice info-notice" role="status" hidden></div>
+<section id="wizard" class="wizard" aria-label="首启向导" hidden>
+<div class="section-heading"><div><p class="eyebrow">FIRST RUN</p><h2>快速开始</h2></div><button id="wizard-skip" class="button quiet">跳过向导</button></div>
+<ol class="wizard-steps">
+<li id="wizard-step-1" class="wizard-step" aria-current="step"><h3>1 · 运行状态</h3><p id="wizard-connection" class="muted"></p></li>
+<li id="wizard-step-2" class="wizard-step" hidden><h3>2 · 只读或可写</h3><p id="wizard-writes" class="muted"></p></li>
+<li id="wizard-step-3" class="wizard-step" hidden><h3>3 · 完成</h3><p class="muted">向导只介绍界面，不修改任何配置；随时可以跳过并重新打开。</p></li>
+</ol>
+<div class="wizard-actions"><button id="wizard-prev" class="button quiet" disabled>上一步</button><button id="wizard-next" class="button primary">下一步</button><button id="wizard-done" class="button primary" hidden>完成</button></div>
+</section>
+<div id="routing-notice" class="notice warn-notice" role="status" hidden></div>
+<section id="conflict" class="conflict" aria-label="配置冲突" hidden>
+<div class="conflict-head"><h2>配置已被其他面板修改</h2><button id="conflict-dismiss" class="button quiet">稍后处理</button></div>
+<p id="conflict-summary" class="muted"></p>
+<div class="conflict-table-wrap"><table class="binding-table"><caption class="sr-only">本地值与服务器当前值差异</caption><thead><tr><th scope="col">字段</th><th scope="col">我的值</th><th scope="col">服务器当前值</th></tr></thead><tbody id="conflict-body"></tbody></table></div>
+<button id="conflict-rebase" class="button primary">以最新值为基线重新编辑</button>
+</section>
+<section id="overview" aria-label="总览"><div class="stats" id="stats"></div><div class="sync-line"><span id="sync">尚未读取配置</span><label><input id="auto" type="checkbox" checked> 自动同步</label></div></section>
+<div class="workspace"><div class="content"><div class="toolbar"><label class="search"><span>⌕</span><input id="search" type="search" placeholder="搜索插件、用途或模型…" aria-label="搜索配置"></label><label class="filter"><input type="checkbox" id="issues"> 只看异常</label></div>
+<section id="core"><div class="section-heading"><div><p class="eyebrow">CORE CONFIGURATION</p><h2>AstrBot 本体</h2></div><span class="muted">全局与账号独立配置</span></div><div id="core-cards" class="cards"></div></section>
+<section id="plugins"><div class="section-heading"><div><p class="eyebrow">PLUGIN WORKSPACE</p><h2>插件模型面板</h2></div><span class="muted">按插件管理任务模型</span></div><div id="plugin-cards" class="cards"></div></section>
+<section id="models"><div class="section-heading"><div><p class="eyebrow">MODEL REGISTRY</p><h2>模型库</h2></div><span class="muted">共享参数影响所有引用</span></div><div id="model-cards" class="model-grid"></div></section>
+<section id="backups"><div class="section-heading"><div><p class="eyebrow">SETTINGS / BACKUPS</p><h2>备份与恢复</h2></div><button id="backups-refresh" class="button">↻ 刷新备份</button></div>
+<div id="backup-summary" class="backup-summary" role="status" aria-live="polite">尚未读取备份信息。</div>
+<ul id="backup-warnings" class="warn-list" aria-label="备份警告" hidden></ul>
+<div class="backup-actions" id="backup-actions"><label class="field">保留份数 <input id="backup-keep" type="number" min="1" max="50" step="1" inputmode="numeric" value="10" aria-label="保留份数"></label><button id="backup-prune" class="button quiet">清理旧备份</button></div>
+<p id="backup-note" class="muted"></p>
+<div class="table-scroll"><table class="binding-table backup-table"><caption class="sr-only">备份列表</caption><thead><tr><th scope="col">备份</th><th scope="col">时间</th><th scope="col">大小</th><th scope="col">文件数</th><th scope="col">数据库</th><th scope="col">操作</th></tr></thead><tbody id="backup-body"></tbody></table></div>
+<div id="restore-panel" class="restore-panel" hidden>
+<h3>从备份恢复</h3>
+<p class="warning-text">恢复会覆盖所选资源的完整对象（不只是差异字段）；请先查看差异再生成计划。</p>
+<div class="restore-controls"><label class="field">资源类型 <select id="restore-kind" aria-label="恢复的资源类型"><option value="profile">配置档案</option><option value="plugin">插件</option><option value="provider">模型 Provider</option></select></label><label class="field">资源 <select id="restore-resource" aria-label="恢复的资源"></select></label><button id="restore-diff" class="button">查看差异</button><button id="restore-plan" class="button primary" disabled>生成恢复计划</button></div>
+<div id="restore-diff-view" class="restore-diff"></div>
+</div>
+</section>
+<section id="devices-section"><div class="section-heading"><div><p class="eyebrow">SETTINGS / DEVICES</p><h2>远程设备</h2></div><div class="section-actions"><button id="diagnostics-export" class="button">⬇ 导出诊断</button><button id="devices-refresh" class="button">↻ 刷新设备</button></div></div>
+<p class="muted">支持 HTTP（OpenAPI Key）、SSH 隧道与 Agent 配对三种远程设备；远程默认只读，Agent 设备在 Agent 端启用写入并勾选“允许远程写入”后才可写；凭据保存在插件状态目录，不会回显。</p>
+<div id="state-panel" class="state-panel">
+<div class="state-head"><h3>运行状态与旧版状态迁移</h3><div class="section-actions"><button id="state-refresh" class="button quiet">↻ 刷新状态</button><button id="state-migrate" class="button">导入旧版状态</button></div></div>
+<dl id="state-facts" class="state-facts"></dl>
+<p id="state-note" class="muted">尚未读取插件状态。只读模式下不能导入旧版状态。</p>
+</div>
+<div class="table-scroll"><table class="binding-table device-table"><caption class="sr-only">已登记设备</caption><thead><tr><th scope="col">名称</th><th scope="col">类型</th><th scope="col">地址</th><th scope="col">健康</th><th scope="col">凭据</th><th scope="col">操作</th></tr></thead><tbody id="device-body"></tbody></table></div>
+<form id="device-form" class="device-form"><label class="field">类型 <select id="device-kind" aria-label="设备类型"><option value="http">HTTP（OpenAPI Key）</option><option value="ssh">SSH 隧道</option><option value="agent">Agent 配对</option></select></label><label class="field">名称 <input id="device-name" type="text" maxlength="80" required autocomplete="off" aria-label="设备名称"></label><label class="field">地址 <input id="device-url" type="url" required placeholder="http://192.168.1.20:6185" autocomplete="off" aria-label="设备地址 baseUrl"></label><label class="field" id="device-key-field">OpenAPI Key <input id="device-key" type="password" autocomplete="new-password" aria-label="设备 OpenAPI Key"></label><div id="device-ssh-fields" class="device-extra" hidden><label class="field">SSH 主机 <input id="device-ssh-host" type="text" autocomplete="off" aria-label="SSH 主机"></label><label class="field">SSH 端口 <input id="device-ssh-port" type="number" min="1" max="65535" step="1" value="22" aria-label="SSH 端口"></label><label class="field">SSH 用户 <input id="device-ssh-user" type="text" autocomplete="off" aria-label="SSH 用户"></label><label class="field">私钥路径 <input id="device-ssh-key" type="text" autocomplete="off" aria-label="SSH 私钥路径"></label><label class="field">远端数据目录 <input id="device-ssh-data" type="text" autocomplete="off" aria-label="远端 AstrBot data 目录"></label></div><label class="field" id="device-pairing-field" hidden>配对码 <input id="device-pairing" type="password" autocomplete="new-password" aria-label="Agent 配对码"></label><label class="field checkbox-field" id="device-allow-write-field" hidden><input id="device-allow-write" type="checkbox" aria-label="允许远程写入"> 允许远程写入（需 Agent 端已启用 --enable-writes）</label><button class="button primary" type="submit">添加设备</button></form>
+<p id="device-note" class="muted"></p>
+</section>
+<p class="footnote">状态来自配置声明与 API 回读，不表示上游调用成功。未核实的隐藏配置与继承规则会单独标注。</p></div>
+<aside class="changes" id="changes-panel" aria-label="待应用变更"><div class="changes-head"><h2>待应用变更 <span id="draft-count">0</span></h2><p>先预览，再保存到 AstrBot。草稿只保存在当前页面内存，刷新会丢弃。</p></div><div id="drafts" class="draft-list"></div><div class="changes-bottom"><button id="prepare" class="button primary wide" disabled>预览修改</button><button id="clear" class="button quiet wide" disabled>放弃全部修改</button><p>保存前自动备份。按配置资源逐项应用，失败时停止。</p></div></aside></div>
+</main><dialog id="review"><div class="dialog-head"><div><p class="eyebrow">REVIEW CHANGES</p><h2>确认应用修改</h2></div><button id="close-review" class="button quiet" aria-label="关闭预览">✕</button></div><p class="muted">以下配置会分别保存并回读。跨资源修改并非原子操作。</p><p id="review-warning" class="warning-text" hidden></p><div id="review-content"></div><label class="ack"><input id="ack" type="checkbox"> 我已核对修改内容及共享影响范围</label><div class="dialog-actions"><button id="cancel-review" class="button">返回编辑</button><button id="apply" class="button primary" disabled>应用修改</button></div></dialog>
+<dialog id="confirm"><div class="dialog-head"><div><p class="eyebrow">CONFIRM</p><h2 id="confirm-title">请确认</h2></div></div><p id="confirm-message" class="muted"></p><div class="dialog-actions"><button id="confirm-cancel" class="button">取消</button><button id="confirm-ok" class="button primary">确定</button></div></dialog>
+<script type="module" src="./app.mjs"></script></body></html>

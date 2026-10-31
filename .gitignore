@@ -1,0 +1,16 @@
+# 本地/运行态产物，不入库
+__pycache__/
+*.pyc
+*.pyo
+.tmp/
+state/
+backups/
+*.jsonl
+*.log
+.env
+.venv/
+venv/
+node_modules/
+.DS_Store
+Thumbs.db
+.playwright-cli/

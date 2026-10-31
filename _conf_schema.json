@@ -1,0 +1,50 @@
+{
+  "edit_mode": {
+    "type": "bool",
+    "description": "编辑模式（允许写入）",
+    "hint": "开启后页面可以创建计划并应用修改；关闭后只读，只能查看快照、备份与诊断。默认开启，因为本插件的目的就是方便改模型配置。",
+    "default": true
+  },
+  "state_dir": {
+    "type": "string",
+    "description": "状态目录",
+    "hint": "备份、审计、诊断与设备注册表的存放目录。留空 = AstrBot data/plugin_data/astrbot_plugin_model_console/state。",
+    "default": ""
+  },
+  "astrbot_data": {
+    "type": "string",
+    "description": "AstrBot data 目录",
+    "hint": "留空 = 自动识别当前实例的 data 目录；多实例部署或远程调试时才需要手填。",
+    "default": ""
+  },
+  "backup_keep": {
+    "type": "int",
+    "description": "备份保留份数",
+    "hint": "超过后清理最旧的备份。默认 10。",
+    "default": 10
+  },
+  "backup_max_mb": {
+    "type": "int",
+    "description": "备份总大小上限（MB）",
+    "hint": "超过后清理最旧的备份，0 = 不按大小限制。默认 2048。",
+    "default": 2048
+  },
+  "devices_enabled": {
+    "type": "bool",
+    "description": "启用远程设备",
+    "hint": "关闭后只保留本机设备，页面不提供 HTTP/SSH/Agent 设备添加入口。",
+    "default": true
+  },
+  "search_test_enabled": {
+    "type": "bool",
+    "description": "启用搜索链路测试",
+    "hint": "关闭后 /search-native-test 与 /search-key-test 返回 SEARCH_TEST_DISABLED，避免误触发真实模型调用。",
+    "default": true
+  },
+  "legacy_state_import": {
+    "type": "bool",
+    "description": "首次启动导入旧控制台状态",
+    "hint": "检测到 %LOCALAPPDATA%\\AstrBotModelConsole\\state 时，把它一次性复制到状态目录（备份、审计、设备密钥）。复制不会删除源目录。",
+    "default": true
+  }
+}

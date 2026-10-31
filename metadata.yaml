@@ -1,0 +1,17 @@
+name: astrbot_plugin_model_console
+display_name: 模型切换器
+short_desc: 在 WebUI 里集中查看与更换 AstrBot 核心、bot 配置与插件使用的模型，带预览、备份与回读。
+desc: >-
+  把原独立 Node 模型控制台（model-console）重写为 AstrBot 插件。左侧栏入口通过官方 Plugin Pages
+  提供，页面内可查看每个配置档案的 6 类核心模型绑定、4 个插件的 15 个模型字段、模型库与推理强度、
+  网页搜索设置与内置搜索 API Key，并支持草稿→预览→逐资源应用的写入流程（revision 双校验、写前
+  备份 cmd_config.json + data/config/*.json + data_v4.db、写后回读、审计留痕）。同时保留备份列表、
+  恢复差异、诊断导出、远程设备（HTTP/SSH/Agent）与搜索链路测试。默认编辑模式可写，可在插件配置里
+  关闭。
+help: >-
+  安装后在 WebUI 左侧栏「插件可视化视图」组点击「模型切换器」进入；也可在 扩展功能 → 插件 →
+  模型切换器 详情页打开 Pages。写入前务必先预览计划；恢复与清理属于破坏性操作，请先看差异。
+version: v0.1.0
+author: CBlazed
+repo: https://github.com/CBlazed/astrbot_plugin_model_console
+astrbot_version: ">=4.24.2"

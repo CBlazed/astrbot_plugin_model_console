@@ -1,0 +1,13 @@
+{
+  "metadata": {
+    "display_name": "Model Console",
+    "short_desc": "Inspect and switch the models used by AstrBot core, bot profiles and plugins.",
+    "desc": "The standalone Node model console rewritten as an AstrBot plugin: overview, safe editing, backups and restore, remote devices, search pipeline tests."
+  },
+  "pages": {
+    "model-console": {
+      "title": "Model Console",
+      "description": "Inspect and switch models for AstrBot core, bot profiles and plugins. Writes require a preview and are backed up before applying."
+    }
+  }
+}

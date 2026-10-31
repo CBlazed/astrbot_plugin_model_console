@@ -1,0 +1,13 @@
+{
+  "metadata": {
+    "display_name": "模型切换器",
+    "short_desc": "在 WebUI 里集中查看与更换 AstrBot 核心、bot 配置与插件使用的模型。",
+    "desc": "把原独立 Node 模型控制台重写为 AstrBot 插件：总览 + 安全编辑 + 备份恢复 + 远程设备 + 搜索链路测试。"
+  },
+  "pages": {
+    "model-console": {
+      "title": "模型切换器",
+      "description": "查看并切换 AstrBot 核心、bot 配置档案与插件使用的模型；写入带预览、备份与回读。"
+    }
+  }
+}
