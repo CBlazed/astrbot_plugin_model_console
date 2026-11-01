@@ -1,5 +1,19 @@
 # 更新日志
 
+## v0.1.1（2026-11-01）
+
+上架审核修复：移除内置日志模块的回退分支。
+
+- **合规**：`console/app.py` 的日志记录器改为无条件从 `astrbot.api` 导入，
+  删除 `try/except` 回退与内置日志模块的导入 / `getLogger` 调用
+  （插件商店上架规范：日志记录器必须且只能从 `astrbot.api` 导入）；
+- **测试**：新增 `tests/_astrbot_stub.py`，在未安装 AstrBot 的单测环境注入最小
+  `astrbot.api.logger` 桩（不使用内置日志模块），由 `tests/__init__.py` 安装；
+- **防回归**：新增 `tests/test_compliance.py`，静态检查全仓禁止内置日志模块导入、
+  `getLogger` / `basicConfig` / `eval` / `exec` / `shell=True` / `requests` / `pickle.loads`，
+  并断言 `astrbot.api.logger` 的导入位于模块顶层、不被 `try/except` 包裹；
+- 版本号 `v0.1.0 → v0.1.1`（`metadata.yaml`、`main.py`、`console/app.py` 同步）。
+
 ## v0.1.0（2026-10-31）
 
 首个版本：把独立 Node 版模型控制台（model-console）重写为 AstrBot 插件。

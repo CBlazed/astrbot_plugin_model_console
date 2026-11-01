@@ -11,7 +11,7 @@ desc: >-
 help: >-
   安装后在 WebUI 左侧栏「插件可视化视图」组点击「模型切换器」进入；也可在 扩展功能 → 插件 →
   模型切换器 详情页打开 Pages。写入前务必先预览计划；恢复与清理属于破坏性操作，请先看差异。
-version: v0.1.0
+version: v0.1.1
 author: CBlazed
 repo: https://github.com/CBlazed/astrbot_plugin_model_console
 astrbot_version: ">=4.24.2"

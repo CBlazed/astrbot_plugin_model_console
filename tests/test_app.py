@@ -253,7 +253,7 @@ class HealthStateTest(_AppCase):
         app = await self.make_app()
         health = await app.health()
         self.assertEqual(health["status"], "ok")
-        self.assertEqual(health["version"], "v0.1.0")
+        self.assertEqual(health["version"], "v0.1.1")
         self.assertEqual(health["dataPath"], str((self.root / "data").resolve()))
         self.assertEqual(health["stateDir"], str((self.root / "state").resolve()))
         self.assertFalse(health["readOnly"])

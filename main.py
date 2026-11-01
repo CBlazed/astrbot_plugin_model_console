@@ -25,7 +25,7 @@ from .console.app import ConsoleApp
 from .console.errors import ConsoleError
 
 PLUGIN_NAME = "astrbot_plugin_model_console"
-PLUGIN_VERSION = "v0.1.0"
+PLUGIN_VERSION = "v0.1.1"
 MAX_BODY_BYTES = 64 * 1024
 
 HandlerResult = dict[str, Any]

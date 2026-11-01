@@ -22,6 +22,8 @@ import time
 from pathlib import Path
 from typing import Any, Mapping
 
+from astrbot.api import logger
+
 from . import agent_adapter as agent_adapter_module
 from . import backup as backup_module
 from . import devices as devices_module
@@ -35,15 +37,8 @@ from .engine import Engine, iso_now
 from .errors import ConsoleError, known_error
 from .gateway import Gateway
 
-try:  # AstrBot 运行时；单测/独立运行时退化为标准 logging。
-    from astrbot.api import logger as _logger
-except Exception:  # noqa: BLE001
-    import logging
-
-    _logger = logging.getLogger("astrbot_plugin_model_console")
-
 #: 插件版本（与 metadata.yaml 保持一致）。
-PLUGIN_VERSION = "v0.1.0"
+PLUGIN_VERSION = "v0.1.1"
 #: 备份告警的稳定错误码前缀（诊断 → 备份告警条）。
 BACKUP_WARNING_PREFIX = "BACKUP_"
 #: 诊断导出条数（旧实现默认 200）。
@@ -342,7 +337,7 @@ class ConsoleApp:
             try:
                 await gateway.close()
             except Exception:  # noqa: BLE001 - 卸载路径不抛
-                _logger.exception("[model_console] 关闭网关时出现未预期异常")
+                logger.exception("[model_console] 关闭网关时出现未预期异常")
 
     @staticmethod
     def _record_indicates_import(record: Mapping[str, Any] | None) -> bool:
